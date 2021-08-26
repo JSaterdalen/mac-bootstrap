@@ -170,8 +170,8 @@ git clone "$BOOTSTRAP_REPO_URL" "$BOOTSTRAP_DIR"
 ################################################################################
 
 bootstrap_echo "Step 1: Installing Laptop script..."
-# todo reenable
-# sh "${BOOTSTRAP_DIR}/install/laptop" 2>&1 | tee ~/laptop.log
+
+sh "${BOOTSTRAP_DIR}/install/laptop" 2>&1 | tee ~/laptop.log
 
 bootstrap_echo "Done!"
 
@@ -181,22 +181,22 @@ bootstrap_echo "Done!"
 ################################################################################
 
 bootstrap_echo "Step 2: Installing Oh My Zsh..."
-# todo reenable
-# if [ -d "${HOME}/.oh-my-zsh" ]; then
-#   rm -rf "${HOME}/.oh-my-zsh"
-# fi
 
-# git clone https://github.com/robbyrussell/oh-my-zsh.git "${HOME}/.oh-my-zsh"
+if [ -d "${HOME}/.oh-my-zsh" ]; then
+  rm -rf "${HOME}/.oh-my-zsh"
+fi
 
-# if [ -d /usr/local/share/zsh ]; then
-#   bootstrap_echo "Setting permissions for /usr/local/share/zsh..."
-#   sudo chmod -R 755 /usr/local/share/zsh
-# fi
+git clone https://github.com/robbyrussell/oh-my-zsh.git "${HOME}/.oh-my-zsh"
 
-# if [ -d /usr/local/share/zsh/site-functions ]; then
-#   bootstrap_echo "Setting permissions for /usr/local/share/zsh/site-functions..."
-#   sudo chmod -R 755 /usr/local/share/zsh/site-functions
-# fi
+if [ -d /usr/local/share/zsh ]; then
+  bootstrap_echo "Setting permissions for /usr/local/share/zsh..."
+  sudo chmod -R 755 /usr/local/share/zsh
+fi
+
+if [ -d /usr/local/share/zsh/site-functions ]; then
+  bootstrap_echo "Setting permissions for /usr/local/share/zsh/site-functions..."
+  sudo chmod -R 755 /usr/local/share/zsh/site-functions
+fi
 
 bootstrap_echo "Done!"
 
@@ -234,7 +234,7 @@ source "${DOTFILES_DIR}/install.sh"
 
 bootstrap_echo "Done!"
 
-# rm -rf "$BOOTSTRAP_DIR"
+rm -rf "$BOOTSTRAP_DIR"
 
 echo
 echo "**********************************************************************"
