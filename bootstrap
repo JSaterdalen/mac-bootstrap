@@ -43,7 +43,7 @@ else
   DEFAULT_HOST_NAME="$host"
 fi
 
-DEFAULT_DOTFILES_BRANCH="master"
+DEFAULT_DOTFILES_BRANCH="main"
 DEFAULT_TIME_ZONE="America/Chicago"
 
 
