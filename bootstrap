@@ -25,7 +25,7 @@ bootstrap_echo() {
 ################################################################################
 
 osname=$(uname)
-
+# TODO add repo branch selection back for testing
 export COMMANDLINE_TOOLS="/Library/Developer/CommandLineTools"
 export OLD_DOTFILES_BAK="${HOME}/old_dotfiles_bak"
 export DOTFILES_REPO_URL="https://github.com/JSaterdalen/dotfiles.git"
@@ -170,8 +170,8 @@ git clone "$BOOTSTRAP_REPO_URL" "$BOOTSTRAP_DIR"
 ################################################################################
 
 bootstrap_echo "Step 1: Installing Laptop script..."
-
-sh "${BOOTSTRAP_DIR}/install/laptop" 2>&1 | tee ~/laptop.log
+# todo reenable
+# sh "${BOOTSTRAP_DIR}/install/laptop" 2>&1 | tee ~/laptop.log
 
 bootstrap_echo "Done!"
 
@@ -181,22 +181,22 @@ bootstrap_echo "Done!"
 ################################################################################
 
 bootstrap_echo "Step 2: Installing Oh My Zsh..."
+# todo reenable
+# if [ -d "${HOME}/.oh-my-zsh" ]; then
+#   rm -rf "${HOME}/.oh-my-zsh"
+# fi
 
-if [ -d "${HOME}/.oh-my-zsh" ]; then
-  rm -rf "${HOME}/.oh-my-zsh"
-fi
+# git clone https://github.com/robbyrussell/oh-my-zsh.git "${HOME}/.oh-my-zsh"
 
-git clone https://github.com/robbyrussell/oh-my-zsh.git "${HOME}/.oh-my-zsh"
+# if [ -d /usr/local/share/zsh ]; then
+#   bootstrap_echo "Setting permissions for /usr/local/share/zsh..."
+#   sudo chmod -R 755 /usr/local/share/zsh
+# fi
 
-if [ -d /usr/local/share/zsh ]; then
-  bootstrap_echo "Setting permissions for /usr/local/share/zsh..."
-  sudo chmod -R 755 /usr/local/share/zsh
-fi
-
-if [ -d /usr/local/share/zsh/site-functions ]; then
-  bootstrap_echo "Setting permissions for /usr/local/share/zsh/site-functions..."
-  sudo chmod -R 755 /usr/local/share/zsh/site-functions
-fi
+# if [ -d /usr/local/share/zsh/site-functions ]; then
+#   bootstrap_echo "Setting permissions for /usr/local/share/zsh/site-functions..."
+#   sudo chmod -R 755 /usr/local/share/zsh/site-functions
+# fi
 
 bootstrap_echo "Done!"
 
@@ -208,7 +208,7 @@ bootstrap_echo "Done!"
 bootstrap_echo "Step 3: Setting macOS preferences..."
 
 # shellcheck source=/dev/null
-source "${BOOTSTRAP_DIR}/install/macos-defaults"
+# source "${BOOTSTRAP_DIR}/install/macos-defaults" # todo reenable
 
 bootstrap_echo "Done!"
 
