@@ -25,7 +25,6 @@ osname=$(uname)
 
 export COMMANDLINE_TOOLS="/Library/Developer/CommandLineTools"
 export OLD_DOTFILES_BAK="${HOME}/old_dotfiles_bak"
-export DICTIONARY_DIR="${HOME}/Library/Spelling"
 export DOTFILES_REPO_URL="JSaterdalen/dotfiles.git"
 export DOTFILES_DIR="${HOME}/dotfiles"
 export BOOTSTRAP_REPO_URL="JSaterdalen/mac-bootstrap.git"
