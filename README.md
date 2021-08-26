@@ -1,5 +1,7 @@
 # Mac Bootstrap
 
+<!-- TODO continue to clean up -->
+
 ![mac-bootstrap screenshot][screenshot]
 
 This script will provision a new machine running a fresh install of [macOS Big Sur (11.15)][bigsur]. It installs and configures software, dotfiles, and general preferences. The command line environment is based on [Zsh][zsh] running in [iTerm2][iterm2].
