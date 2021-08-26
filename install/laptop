@@ -56,6 +56,10 @@ if ! command -v brew >/dev/null; then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 fi
 
+# TODO add check for M1 and do the following
+# echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/josh/.zprofile
+# eval "$(/opt/homebrew/bin/brew shellenv)"
+
 if brew list | grep -Fq brew-cask; then
   laptop_echo "Uninstalling old Homebrew-Cask ..."
   brew uninstall --force brew-cask
