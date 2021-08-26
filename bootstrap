@@ -25,9 +25,9 @@ osname=$(uname)
 
 export COMMANDLINE_TOOLS="/Library/Developer/CommandLineTools"
 export OLD_DOTFILES_BAK="${HOME}/old_dotfiles_bak"
-export DOTFILES_REPO_URL="JSaterdalen/dotfiles.git"
+export DOTFILES_REPO_URL="https://github.com/JSaterdalen/dotfiles.git"
 export DOTFILES_DIR="${HOME}/dotfiles"
-export BOOTSTRAP_REPO_URL="JSaterdalen/mac-bootstrap.git"
+export BOOTSTRAP_REPO_URL="https://github.com/JSaterdalen/mac-bootstrap.git"
 export BOOTSTRAP_DIR="${HOME}/mac-bootstrap"
 
 PS3="> "
