@@ -85,7 +85,7 @@ brew "coreutils"
 brew "gh"
 brew "git"
 brew "gnupg" # asdf-nodejs dependency
-brew "imagemagick"
+# brew "imagemagick"
 brew "libtool" # asdf dependency
 brew "libxslt" # asdf dependency
 brew "libyaml" # asdf dependency
