@@ -6,14 +6,14 @@
 laptop_echo() {
   local fmt="$1"; shift
 
-  # shellcheck disable=SC2059
   printf "\\n[LAPTOP] $fmt\\n" "$@"
 }
 
-# shellcheck disable=SC2154
 trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
 
 set -e
+
+laptop_echo "Sudo mode is active"
 
 if [ ! -d "${HOME}/bin/" ]; then
   mkdir "${HOME}/bin"
@@ -30,18 +30,6 @@ else
   sudo chflags norestricted "$HOMEBREW_PREFIX"
   sudo chown -R "${LOGNAME}:admin" "$HOMEBREW_PREFIX"
 fi
-
-update_fish_shell() {
-  local shell_path;
-  shell_path="$(command -v fish)"
-
-  laptop_echo "Changing your shell to fish ..."
-  if ! grep "$shell_path" /etc/shells > /dev/null 2>&1 ; then
-    laptop_echo "Adding '${shell_path}' to /etc/shells"
-    echo "$shell_path" | sudo tee -a /etc/shells
-  fi
-  sudo chsh -s "$shell_path" "$USER"
-}
 
 update_zsh_shell() {
   local shell_path;
@@ -82,107 +70,39 @@ tap "homebrew/cask-fonts"
 tap "homebrew/cask-versions"
 tap "homebrew/core"
 tap "homebrew/services"
-tap "puma/puma"
-tap "universal-ctags/universal-ctags"
 
 # Need to install openssl before libyaml
 brew "openssl"
 brew "openssl@1.1" # wget dependency
 
-brew "advancecomp"
-brew "ansible"
-brew "asciidoctor"
 brew "autoconf" # asdf dependency
 brew "automake" # asdf dependency
-brew "awscli"
-brew "bash"
-brew "bash-completion"
-brew "bat"
-brew "cloc"
-brew "cmake"
 brew "coreutils"
-brew "diff-so-fancy"
-brew "dos2unix"
-brew "exa"
-brew "fish"
-brew "fontforge"
-brew "fzf"
-brew "gifsicle"
+brew "gh"
 brew "git"
-brew "git-quick-stats"
-brew "gmp" # Vim dependency
 brew "gnupg" # asdf-nodejs dependency
-brew "highlight"
-brew "htop"
-brew "httpie"
 brew "imagemagick"
-brew "jhead"
-brew "jq"
-brew "less"
-brew "libtermkey"
 brew "libtool" # asdf dependency
 brew "libxslt" # asdf dependency
 brew "libyaml" # asdf dependency
-brew "media-info"
-brew "memcached"
-brew "mono"
-brew "most"
-brew "multitail"
-brew "neovim", args: ["HEAD"]
-brew "onefetch"
-brew "overmind"
-brew "pandoc"
-brew "perl"
-brew "pgcli"
-brew "postgresql", restart_service: true
-brew "puma/puma/puma-dev"
-brew "python"
-brew "ranger", link: false
-brew "readline"
-brew "ripgrep"
-brew "rlwrap"
-brew "rsync"
-brew "shellcheck"
+brew "mas"
 brew "sqlite"
-brew "ssh-copy-id"
-brew "starship"
-brew "the_silver_searcher"
-brew "tldr"
-brew "tmux"
-brew "trash"
-brew "tree"
-brew "universal-ctags/universal-ctags/universal-ctags", args: ["HEAD"]
 brew "unixodbc" # asdf dependency
-brew "w3m"
 brew "wget"
-brew "xz"
 brew "zsh"
 
 # homebrew-cask
 # https://github.com/caskroom/homebrew-cask
-cask "font-fira-code-nerd-font"
-cask "alacritty"
-cask "iterm2-beta"
+cask "font-inconsolata"
+cask "font-fira-code"
+cask "iterm2"
 EOF
 
-case "$DEFAULT_SHELL" in
-  fish)
-    laptop_echo "Your shell preference is set to FISH..."
-    update_fish_shell
-    ;;
-  zsh)
-    laptop_echo "Your shell preference is set to ZSH..."
-    update_zsh_shell
-    ;;
-  *)
-    laptop_echo "No shell preference detected. Using FISH..."
-    update_fish_shell
-    ;;
-esac
+update_zsh_shell
 
 laptop_echo "Configuring asdf version manager..."
 if [ ! -d "${HOME}/.asdf" ]; then
-  git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.7.7
+  git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.8.1
 else
   "${HOME}/.asdf/bin/asdf" update
   "${HOME}/.asdf/bin/asdf" plugin-update --all
@@ -210,7 +130,7 @@ install_asdf_language() {
 }
 
 laptop_echo "Installing Ruby..."
-install_asdf_language "ruby" "$ASDF_RUBY_VERSION"
+install_asdf_language "ruby" "latest"
 laptop_echo "Checking which Ruby and Gem installs we are using at this point..."
 echo "Ruby --> $(command -v ruby)"
 ruby -v
@@ -222,43 +142,40 @@ bundle config --global jobs $((number_of_cores - 1))
 
 laptop_echo "Installing default gems..."
 gem install bundler
-gem install haml_lint
-gem install neovim
-gem install pry
-gem install rubocop
-gem install tmuxinator
-gem install solargraph
 
 laptop_echo "Installing Node..."
 bash "${HOME}/.asdf/plugins/nodejs/bin/import-release-team-keyring"
-install_asdf_language "nodejs" "$ASDF_NODEJS_VERSION"
+install_asdf_language "nodejs" "latest"
 echo "Node --> $(command -v node)"
 node -v
 echo "NPM --> $(command -v npm)"
 npm -v
 
-laptop_echo "Installing default npm packages..."
-npm install -g @vue/cli
-npm install -g gulp-cli
-npm install -g http-server
-npm install -g neovim
-npm install -g pug
-npm install -g stylelint
-npm install -g typescript
-npm install -g vue-language-server
-
-laptop_echo "Installing Python support for Neovim..."
-echo "Python 3 --> $(command -v python3)"
-python3 --version
-echo "Python 2 --> $(command -v python)"
-python --version
-sudo easy_install pip
-python3 -m pip install --user --upgrade pynvim
-python2 -m pip install --user --upgrade pynvim
+# laptop_echo "Installing default npm packages..."
+# npm install -g @vue/cli
+# npm install -g gulp-cli
+# npm install -g http-server
+# npm install -g neovim
+# npm install -g pug
+# npm install -g stylelint
+# npm install -g typescript
+# npm install -g vue-language-server
 
 if [ ! -d "${HOME}/.yarn" ]; then
   laptop_echo "Installing Yarn..."
   curl -o- -L https://yarnpkg.com/install.sh | bash
 fi
+
+# TODO set up manual zsh plugins
+laptop_echo "Installing powerlevel10k..."
+# git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $HOME/.zsh/powerlevel10k
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+
+laptop_echo "Installing zsh-autosuggestions..."
+# git clone https://github.com/zsh-users/zsh-autosuggestions $HOME/.zsh/zsh-autosuggestions
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+
+laptop_echo "Installing zsh-syntax-highlighting..."
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $HOME/.zsh/zsh-syntax-highlighting
 
 laptop_echo "Laptop installation completed successfully!"
