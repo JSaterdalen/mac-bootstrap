@@ -7,6 +7,9 @@
 # other development preferences.
 ################################################################################
 
+# TODO add checks for each step to skip them if the script is run again
+# could set an environment variable for this, for each step
+# then say "has this step run yet?"
 
 # Thank you, thoughtbot!
 bootstrap_echo() {
