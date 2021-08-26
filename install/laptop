@@ -165,6 +165,8 @@ npm -v
 # npm install -g typescript
 # npm install -g vue-language-server
 
+# todo install python with asdf
+
 if [ ! -d "${HOME}/.yarn" ]; then
   laptop_echo "Installing Yarn..."
   curl -o- -L https://yarnpkg.com/install.sh | bash
@@ -174,6 +176,8 @@ fi
 laptop_echo "Installing powerlevel10k..."
 # git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $HOME/.zsh/powerlevel10k
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+
+# todo add nerd font for p10k
 
 laptop_echo "Installing zsh-autosuggestions..."
 # git clone https://github.com/zsh-users/zsh-autosuggestions $HOME/.zsh/zsh-autosuggestions
