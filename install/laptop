@@ -90,9 +90,11 @@ brew "libtool" # asdf dependency
 brew "libxslt" # asdf dependency
 brew "libyaml" # asdf dependency
 brew "mas"
+brew "openssl"
 brew "sqlite"
 brew "unixodbc" # asdf dependency
 brew "wget"
+brew "zlib" python dependency
 brew "zsh"
 
 # homebrew-cask
@@ -114,17 +116,18 @@ fi
 
 install_asdf_plugin() {
   local name="$1"
-  local url="$2"
 
   if ! asdf plugin-list | grep -Fq "$name"; then
-    asdf plugin-add "$name" "$url"
+    asdf plugin-add "$name"
   fi
 }
 
 # shellcheck disable=SC1090
 source "${HOME}/.asdf/asdf.sh"
-install_asdf_plugin "ruby" "https://github.com/asdf-vm/asdf-ruby.git"
-install_asdf_plugin "nodejs" "https://github.com/asdf-vm/asdf-nodejs.git"
+install_asdf_plugin "ruby"
+install_asdf_plugin "nodejs"
+install_asdf_plugin "python"
+install_asdf_plugin "java"
 
 install_asdf_language() {
   local language="$1"
@@ -132,6 +135,13 @@ install_asdf_language() {
   asdf install "$language" "$version"
   asdf global "$language" "$version"
 }
+
+laptop_echo "Installing python..."
+install_asdf_language "python" "latest"
+echo "python --> $(command -v python)"
+python -V
+echo "pip --> $(command -v pip)"
+pip -V
 
 laptop_echo "Installing Ruby..."
 install_asdf_language "ruby" "latest"
@@ -155,17 +165,14 @@ node -v
 echo "NPM --> $(command -v npm)"
 npm -v
 
-# laptop_echo "Installing default npm packages..."
-# npm install -g @vue/cli
-# npm install -g gulp-cli
-# npm install -g http-server
-# npm install -g neovim
-# npm install -g pug
-# npm install -g stylelint
-# npm install -g typescript
-# npm install -g vue-language-server
+laptop_echo "Installing default npm packages..."
+npm install -g sfdx-cli
 
-# todo install python with asdf
+laptop_echo "Installing Java..."
+install_asdf_language "java" "zulu-11.50.19"
+source "${HOME}/.asdf/plugins/java/set-java-home.zsh"
+echo "Java --> $(command -v java)"
+echo $JAVA_HOME
 
 if [ ! -d "${HOME}/.yarn" ]; then
   laptop_echo "Installing Yarn..."
