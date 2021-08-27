@@ -99,7 +99,7 @@ brew "openssl"
 brew "sqlite"
 brew "unixodbc" # asdf dependency
 brew "wget"
-brew "zlib" python dependency
+brew "zlib" # python dependency
 brew "zsh"
 
 # homebrew-cask
