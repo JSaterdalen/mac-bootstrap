@@ -19,11 +19,17 @@ if [ ! -d "${HOME}/bin/" ]; then
   mkdir "${HOME}/bin"
 fi
 
-HOMEBREW_PREFIX="/usr/local"
+# Mac CPU
+CPU=$(uname -p)
+if [[ "$CPU" == "arm" ]]; then
+    HOMEBREW_PREFIX="/opt/homebrew"
+else
+    HOMEBREW_PREFIX="/usr/local"
+fi
 
 if [ -d "$HOMEBREW_PREFIX" ]; then
   if ! [ -r "$HOMEBREW_PREFIX" ]; then
-    sudo chown -R "${LOGNAME}:admin" /usr/local
+    sudo chown -R "${LOGNAME}:admin" $HOMEBREW_PREFIX
   fi
 else
   sudo mkdir "$HOMEBREW_PREFIX"
@@ -56,9 +62,8 @@ if ! command -v brew >/dev/null; then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 fi
 
-# TODO add check for M1 and do the following
-# echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/josh/.zprofile
-# eval "$(/opt/homebrew/bin/brew shellenv)"
+
+eval "$(${HOMEBREW_PREFIX}/bin/brew shellenv)"
 
 if brew list | grep -Fq brew-cask; then
   laptop_echo "Uninstalling old Homebrew-Cask ..."
