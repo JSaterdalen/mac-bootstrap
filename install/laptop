@@ -19,24 +19,6 @@ if [ ! -d "${HOME}/bin/" ]; then
   mkdir "${HOME}/bin"
 fi
 
-# Mac CPU
-CPU=$(uname -p)
-if [[ "$CPU" == "arm" ]]; then
-    HOMEBREW_PREFIX="/opt/homebrew"
-else
-    HOMEBREW_PREFIX="/usr/local"
-fi
-
-if [ -d "$HOMEBREW_PREFIX" ]; then
-  if ! [ -r "$HOMEBREW_PREFIX" ]; then
-    sudo chown -R "${LOGNAME}:admin" $HOMEBREW_PREFIX
-  fi
-else
-  sudo mkdir "$HOMEBREW_PREFIX"
-  sudo chflags norestricted "$HOMEBREW_PREFIX"
-  sudo chown -R "${LOGNAME}:admin" "$HOMEBREW_PREFIX"
-fi
-
 update_zsh_shell() {
   local shell_path;
   shell_path="$(command -v zsh)"
@@ -57,57 +39,31 @@ gem_install_or_update() {
   fi
 }
 
-if ! command -v brew >/dev/null; then
-  laptop_echo "Installing Homebrew ..."
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-fi
 
+# # Need to install openssl before libyaml
+# brew "openssl"
+# brew "openssl@1.1" # wget dependency
 
-eval "$(${HOMEBREW_PREFIX}/bin/brew shellenv)"
+# brew "autoconf" # asdf dependency
+# brew "automake" # asdf dependency
+# brew "coreutils"
+# brew "gh"
+# brew "git"
+# brew "gnupg" # asdf-nodejs dependency
+# # brew "imagemagick"
+# brew "libtool" # asdf dependency
+# brew "libxslt" # asdf dependency
+# brew "libyaml" # asdf dependency
+# brew "mas"
+# brew "openssl"
+# brew "sqlite"
+# brew "unixodbc" # asdf dependency
+# brew "wget"
+# brew "zlib" # python dependency
+# brew "zsh"
 
-if brew list | grep -Fq brew-cask; then
-  laptop_echo "Uninstalling old Homebrew-Cask ..."
-  brew uninstall --force brew-cask
-fi
-
-laptop_echo "Updating Homebrew formulae ..."
-brew update --force # https://github.com/Homebrew/brew/issues/1151
-brew bundle --file=- <<EOF
-tap "homebrew/bundle"
-tap "homebrew/cask"
-tap "homebrew/cask-fonts"
-tap "homebrew/cask-versions"
-tap "homebrew/core"
-tap "homebrew/services"
-
-# Need to install openssl before libyaml
-brew "openssl"
-brew "openssl@1.1" # wget dependency
-
-brew "autoconf" # asdf dependency
-brew "automake" # asdf dependency
-brew "coreutils"
-brew "gh"
-brew "git"
-brew "gnupg" # asdf-nodejs dependency
-# brew "imagemagick"
-brew "libtool" # asdf dependency
-brew "libxslt" # asdf dependency
-brew "libyaml" # asdf dependency
-brew "mas"
-brew "openssl"
-brew "sqlite"
-brew "unixodbc" # asdf dependency
-brew "wget"
-brew "zlib" python dependency
-brew "zsh"
-
-# homebrew-cask
-# https://github.com/caskroom/homebrew-cask
-cask "font-inconsolata"
-cask "font-fira-code"
-cask "iterm2"
-EOF
+# cask "font-inconsolata"
+# cask "font-fira-code"
 
 update_zsh_shell
 
