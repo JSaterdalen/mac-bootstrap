@@ -11,6 +11,12 @@ laptop_echo() {
 
 trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
 
+# TODO remove this keep-alive when done; this is handled in bootstrap
+sudo -v
+
+# Keep-alive: update existing `sudo` time stamp until bootstrap has finished
+while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+
 set -e
 
 if [ ! -d "${HOME}/bin/" ]; then
@@ -83,7 +89,7 @@ install_asdf_plugin() {
 }
 
 # shellcheck disable=SC1090
-source "${HOME}/.asdf/asdf.sh"
+# . "${HOME}/.asdf/asdf.sh" # TODO possible to fix?
 install_asdf_plugin "ruby"
 install_asdf_plugin "nodejs"
 install_asdf_plugin "python"
