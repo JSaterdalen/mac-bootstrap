@@ -45,7 +45,7 @@ if [[ "$OSTYPE" == 'darwin'* ]]; then
   bootstrap_echo "Oops, looks like you're on a Mac. Please have a look at
   my Mac Bootstrap script: https://github.com/JSaterdalen/mac-bootstrap"
   exit 1
-else [[ "$OSTYPE" != 'linux-gnu'* ]]; then
+elif [[ "$OSTYPE" != 'linux-gnu'* ]]; then
   bootstrap_echo "Oops, it looks like you're using a non-UNIX system. This script
 only supports Linux. Exiting..."
   exit 1

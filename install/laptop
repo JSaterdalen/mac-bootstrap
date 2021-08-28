@@ -39,7 +39,8 @@ gem_install_or_update() {
   fi
 }
 
-
+# TODO replace with Linux installs
+sudo apt install curl git
 # # Need to install openssl before libyaml
 # brew "openssl"
 # brew "openssl@1.1" # wget dependency
@@ -141,17 +142,17 @@ if [ ! -d "${HOME}/.yarn" ]; then
 fi
 
 # TODO set up manual zsh plugins
-laptop_echo "Installing powerlevel10k..."
-# git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $HOME/.zsh/powerlevel10k
-git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+# laptop_echo "Installing powerlevel10k..."
+# # git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $HOME/.zsh/powerlevel10k
+# git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 
-# todo add nerd font for p10k
+# # todo add nerd font for p10k
 
-laptop_echo "Installing zsh-autosuggestions..."
-# git clone https://github.com/zsh-users/zsh-autosuggestions $HOME/.zsh/zsh-autosuggestions
-git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+# laptop_echo "Installing zsh-autosuggestions..."
+# # git clone https://github.com/zsh-users/zsh-autosuggestions $HOME/.zsh/zsh-autosuggestions
+# git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 
-laptop_echo "Installing zsh-syntax-highlighting..."
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $HOME/.zsh/zsh-syntax-highlighting
+# laptop_echo "Installing zsh-syntax-highlighting..."
+# git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $HOME/.zsh/zsh-syntax-highlighting
 
 laptop_echo "Laptop installation completed successfully!"
