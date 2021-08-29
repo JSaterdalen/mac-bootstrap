@@ -178,18 +178,4 @@ source "${HOME}/.asdf/plugins/java/set-java-home.zsh"
 echo "Java --> $(command -v java)"
 echo $JAVA_HOME
 
-# TODO set up manual zsh plugins
-laptop_echo "Installing powerlevel10k..."
-# git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $HOME/.zsh/powerlevel10k
-git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
-
-# todo add nerd font for p10k
-
-laptop_echo "Installing zsh-autosuggestions..."
-# git clone https://github.com/zsh-users/zsh-autosuggestions $HOME/.zsh/zsh-autosuggestions
-git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-
-laptop_echo "Installing zsh-syntax-highlighting..."
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $HOME/.zsh/zsh-syntax-highlighting
-
 laptop_echo "Laptop installation completed successfully!"
