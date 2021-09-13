@@ -121,18 +121,19 @@ fi
 
 install_asdf_plugin() {
   local name="$1"
+  local url="$2"
 
   if ! asdf plugin-list | grep -Fq "$name"; then
-    asdf plugin-add "$name"
+    asdf plugin-add "$name" "$url"
   fi
 }
 
 # shellcheck disable=SC1090
 source "${HOME}/.asdf/asdf.sh"
-install_asdf_plugin "ruby"
-install_asdf_plugin "nodejs"
-install_asdf_plugin "python"
-install_asdf_plugin "java"
+install_asdf_plugin "ruby" "https://github.com/asdf-vm/asdf-ruby.git"
+install_asdf_plugin "nodejs" "https://github.com/asdf-vm/asdf-nodejs.git"
+install_asdf_plugin "python" ""
+install_asdf_plugin "java" "https://github.com/halcyon/asdf-java.git"
 
 install_asdf_language() {
   local language="$1"
